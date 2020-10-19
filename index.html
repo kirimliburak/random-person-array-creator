@@ -11,7 +11,7 @@
 </head>
 
 <body onload="createRandom();">
-    <div class="container" id="generator-container">
+    <div class="container" id="generator-container" style="display: inline-block;">
         <div class="row">
             <div>
                 <p id="creator-header">Random Person Creator Menu</p>
@@ -20,9 +20,15 @@
                 <p id="generator-species"></p>
                 <p id="generator-status"></p>
                 <button class="btn btn-success">Add to My List</button>
-                <button class="btn btn-warning" onclick="createRandom();">Generate Another</button>
+                <button class="btn btn-warning" onclick="createRandom();" style="color: white;">Generate Another</button>
             </div>
         </div>
+    </div>
+    <div class="container-fluid" id="local-DB-list-container">
+        <p id="DB-header">My Characters</p>
+        <div class="row" id="local-DB-list">
+        </div>
+
     </div>
 
 </body>
