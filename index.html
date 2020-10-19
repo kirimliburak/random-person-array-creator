@@ -10,7 +10,7 @@
     <title>Random Person Array Creator</title>
 </head>
 
-<body onload="createRandom();">
+<body onload="createRandom(2);">
     <div class="container" id="generator-container" style="display: inline-block;">
         <div class="row">
             <div>
@@ -19,8 +19,8 @@
                 <p id="generator-name"></p>
                 <p id="generator-species"></p>
                 <p id="generator-status"></p>
-                <button class="btn btn-success">Add to My List</button>
-                <button class="btn btn-warning" onclick="createRandom();" style="color: white;">Generate Another</button>
+                <button class="btn btn-success" onclick="addDB();">Add to My List</button>
+                <button class="btn btn-warning" onclick="createRandom(2);" style="color: white;">Generate Another</button>
             </div>
         </div>
     </div>
