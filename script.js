@@ -27,7 +27,7 @@ async function apiRequest(value) {
         spanStatus.style.backgroundColor = "red";
     } else {
         spanStatus.style.backgroundColor = "rgb(235, 235, 2)";
-    } 
+    }
 
     charName.innerHTML = `<strong>Name: </strong>${resultCharacter.name}`;
     charSpecies.innerHTML = `<strong>Species: </strong>${resultCharacter.species}`;
@@ -54,10 +54,10 @@ function createCharacterCard(charObject) {
     charTemp.classList.add('listGallery');
     charTemp.innerHTML = `<img src=${charObject.imgURL} alt="Character" width="600" height="400">
                             <div class="desc">
-                                <p><strong>Name: </strong>${charObject.fullname.replace("Name: ","")}</p>
-                                <p><strong>Species: </strong>${charObject.species.replace("Species: ","")}</p>
+                                <p><strong>Name: </strong>${charObject.fullname.replace("Name: ", "")}</p>
+                                <p><strong>Species: </strong>${charObject.species.replace("Species: ", "")}</p>
                                 <div class="char-card">
-                                <p><strong>Status: </strong>${charObject.status.replace("Status: ","")}</p>
+                                <p><strong>Status: </strong>${charObject.status.replace("Status: ", "")}</p>
                                 <span class="glyphicon glyphicon-ok-sign" style="background-color: ${charObject.spanColor};" id="status-span"></span>
                                 </div>
                             </div>`;
