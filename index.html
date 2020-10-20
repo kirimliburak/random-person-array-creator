@@ -18,9 +18,13 @@
                 <img src="" alt="Character Image" id="generator-image" loading="lazy">
                 <p id="generator-name"></p>
                 <p id="generator-species"></p>
-                <p id="generator-status"></p>
+                <div id="status-div">
+                    <p id="generator-status"></p>
+                    <span class="glyphicon glyphicon-ok-sign" style="background-color: green;" id="status-span"></span>
+                </div>
                 <button class="btn btn-success" onclick="addDB();">Add to My List</button>
-                <button class="btn btn-warning" onclick="createRandom();" style="color: white;">Generate Another</button>
+                <button class="btn btn-warning" onclick="createRandom();" style="color: white;">Generate
+                    Another</button>
             </div>
         </div>
     </div>

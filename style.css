@@ -79,3 +79,19 @@ body {
 #local-DB-list .desc {
     padding-top: 15px;
 }
+
+#status-span{
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-left: 15px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+}
+
+#status-div, .char-card{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}

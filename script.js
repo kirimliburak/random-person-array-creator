@@ -10,6 +10,7 @@ let charSpecies = document.getElementById("generator-species");
 let charStatus = document.getElementById("generator-status");
 let charImage = document.getElementById("generator-image");
 let body = document.getElementById("index-body");
+let spanStatus = document.getElementById("status-span");
 
 async function apiRequest(value) {
     let URL = `https://rickandmortyapi.com/api/character/${value}`;
@@ -20,20 +21,17 @@ async function apiRequest(value) {
     let resultCharacter = await response.json();
     checkIfExists[(value - 1)] = 1;
 
-    let tempSpan = document.createElement('span');
-
-    if (resultCharacter.status == "Alive") {
-        tempSpan.innerHTML = `<span class="glyphicon glyphicon-ok-sign" style="background-color: green;"></span>`;
-    } else if (resultCharacter.status == "Dead") {
-        tempSpan.innerHTML = `<span class="glyphicon glyphicon-remove-sign" style="background-color: red;></span>`;
+    if (resultCharacter.status.valueOf() === "Alive") {
+        spanStatus.style.backgroundColor = "green";
+    } else if (resultCharacter.status.valueOf() === "Dead") {
+        spanStatus.style.backgroundColor = "red";
     } else {
-        tempSpan.innerHTML = `<span class="glyphicon glyphicon-question-sign" style="background-color: yellow;></span>`;
-    }
+        spanStatus.style.backgroundColor = "rgb(235, 235, 2)";
+    } 
 
     charName.innerHTML = `<strong>Name: </strong>${resultCharacter.name}`;
     charSpecies.innerHTML = `<strong>Species: </strong>${resultCharacter.species}`;
     charStatus.innerHTML = `<strong>Status: </strong>${resultCharacter.status}`;
-    document.getElementById("generator-status").append(tempSpan);
     charImage.src = resultCharacter.image;
 
 }
@@ -44,7 +42,7 @@ function createCharacter() {
         species: charSpecies.innerText,
         imgURL: charImage.src,
         status: charStatus.innerText,
-        //statusSpan: tempSpan,
+        spanColor: spanStatus.style.backgroundColor,
     };
 
     return character;
@@ -56,9 +54,12 @@ function createCharacterCard(charObject) {
     charTemp.classList.add('listGallery');
     charTemp.innerHTML = `<img src=${charObject.imgURL} alt="Character" width="600" height="400">
                             <div class="desc">
-                                <p><strong>Name: </strong>${charObject.fullname}</p>
-                                <p><strong>Species: </strong>${charObject.species}</p>
-                                <p><strong>Status: </strong>${charObject.status}</p>
+                                <p><strong>Name: </strong>${charObject.fullname.replace("Name: ","")}</p>
+                                <p><strong>Species: </strong>${charObject.species.replace("Species: ","")}</p>
+                                <div class="char-card">
+                                <p><strong>Status: </strong>${charObject.status.replace("Status: ","")}</p>
+                                <span class="glyphicon glyphicon-ok-sign" style="background-color: ${charObject.spanColor};" id="status-span"></span>
+                                </div>
                             </div>`;
     localList.appendChild(charTemp);
 }
