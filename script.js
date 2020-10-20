@@ -5,7 +5,13 @@ for (let i = 0; i < 671; i++) {
 
 let localDB = [];
 
-async function apiRequest(value, selection) {
+let charName = document.getElementById("generator-name");
+let charSpecies = document.getElementById("generator-species");
+let charStatus = document.getElementById("generator-status");
+let charImage = document.getElementById("generator-image");
+let body = document.getElementById("index-body");
+
+async function apiRequest(value) {
     let URL = `https://rickandmortyapi.com/api/character/${value}`;
     let response = await fetch(URL, {
         method: 'GET',
@@ -14,58 +20,70 @@ async function apiRequest(value, selection) {
     let resultCharacter = await response.json();
     checkIfExists[(value - 1)] = 1;
 
-    
     let tempSpan = document.createElement('span');
- 
+
     if (resultCharacter.status == "Alive") {
         tempSpan.innerHTML = `<span class="glyphicon glyphicon-ok-sign" style="background-color: green;"></span>`;
     } else if (resultCharacter.status == "Dead") {
         tempSpan.innerHTML = `<span class="glyphicon glyphicon-remove-sign" style="background-color: red;></span>`;
     } else {
         tempSpan.innerHTML = `<span class="glyphicon glyphicon-question-sign" style="background-color: yellow;></span>`;
-    } 
-    
+    }
 
-    document.getElementById("generator-name").innerHTML = `<strong>Name: </strong>${resultCharacter.name}`;
-    document.getElementById("generator-species").innerHTML = `<strong>Species: </strong>${resultCharacter.species}`;
-    document.getElementById("generator-status").innerHTML = `<strong>Status: </strong>${resultCharacter.status}`;
+    charName.innerHTML = `<strong>Name: </strong>${resultCharacter.name}`;
+    charSpecies.innerHTML = `<strong>Species: </strong>${resultCharacter.species}`;
+    charStatus.innerHTML = `<strong>Status: </strong>${resultCharacter.status}`;
     document.getElementById("generator-status").append(tempSpan);
-    document.getElementById("generator-image").src = resultCharacter.image;
+    charImage.src = resultCharacter.image;
 
 }
 
-//character objesi ayrı methodda oluştur
-
-function addDB() {
+function createCharacter() {
     let character = {
-        fullname: document.getElementById("generator-name").innerText,
-        species: document.getElementById("generator-species").innerText,
-        imgURL: document.getElementById("generator-image").src,
-        status: document.getElementById("generator-status").innerText,
+        fullname: charName.innerText,
+        species: charSpecies.innerText,
+        imgURL: charImage.src,
+        status: charStatus.innerText,
         //statusSpan: tempSpan,
     };
 
-    localDB.push(character);
+    return character;
+}
 
-    //ayrı methodda oluştur
+function createCharacterCard(charObject) {
     let localList = document.getElementById("local-DB-list");
     let charTemp = document.createElement('div');
     charTemp.classList.add('listGallery');
-    charTemp.innerHTML = `<img src="${character.imgURL}" alt="Character" width="600" height="400"><div class="desc"><p><strong>Name: </strong>${character.fullname}</p><p><strong>Species: </strong>${character.species}</p><p><strong>Status: </strong>${character.status}</p></div>`;
+    charTemp.innerHTML = `<img src=${charObject.imgURL} alt="Character" width="600" height="400">
+                            <div class="desc">
+                                <p><strong>Name: </strong>${charObject.fullname}</p>
+                                <p><strong>Species: </strong>${charObject.species}</p>
+                                <p><strong>Status: </strong>${charObject.status}</p>
+                            </div>`;
     localList.appendChild(charTemp);
-
-    createRandom(2);
 }
 
-function createRandom(value) {
+function addDB() {
+    let character = createCharacter();
+    if (localDB.indexOf(character) == -1) {
+        localDB.push(character);
+    } else {
+        window.alert("You have this character in your list!");
+    }
+    createCharacterCard(character);
+    createRandom();
+    body.style.height = "max-content";
+}
+
+function createRandom() {
     let id = Math.floor(Math.random() * 671) + 1;
     if (checkIfExists[(id - 1)] === 0) {
-        apiRequest(id, parseInt(value));
+        apiRequest(id);
     } else {
         if (checkIfExists.indexOf(0) == -1) {
             window.alert("You analyzed all characters in the API!");
         } else {
-            createRandom(value);
+            createRandom();
         }
     }
 }
